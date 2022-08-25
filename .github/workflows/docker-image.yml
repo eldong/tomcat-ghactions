@@ -16,11 +16,11 @@ jobs:
     
     - uses: azure/docker-login@v1
       with:
-        login-server: webappwebapi.azurecr.io
+        login-server: tomcatghactions.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}    
 
     - name: Build the Docker image
       run: |
-        docker build . --file Dockerfile --tag webappwebapi.azurecr.io/webapi:${{ github.run_number }}
-        docker push webappwebapi.azurecr.io/webapi:${{ github.run_number }}
+        docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
+        docker push tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
