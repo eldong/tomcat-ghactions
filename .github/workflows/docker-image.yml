@@ -32,7 +32,7 @@ jobs:
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}    
         
-    - name: Replace creds in properties file
+    - name: Replace creds in app properties file
       uses: ./.github/actions/replace
       with:
         files: application.properties
