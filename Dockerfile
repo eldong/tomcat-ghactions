@@ -22,6 +22,7 @@ RUN yum -y install java
 RUN java -version
 
 copy keyvault.properties keyvault.properties
+copy keyvault.properties webapps/keyvault.properties
 
 WORKDIR /opt/tomcat/webapps
 RUN curl -O -L https://github.com/AKSarav/SampleWebApp/raw/master/dist/SampleWebApp.war
