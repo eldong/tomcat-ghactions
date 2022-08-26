@@ -38,8 +38,8 @@ jobs:
 #        files: keyvault.properties
 #        replacements: '$$KV_USER_NAME$$=${{ steps.myGetSecretAction.outputs.username }},$$KV_PASSWORD$$=${{ steps.myGetSecretAction.outputs.userpassword }}'
       run: |
-        sed -e "s/##KV_USER_NAME##/"${{ steps.myGetSecretAction.outputs.username }} keyvault.properties
-        sed -e "s/##KV_PASSWORD##/"${{ steps.myGetSecretAction.outputs.userpassword }} keyvault.properties
+        sed -e "s/##KV_USER_NAME##/${{ steps.myGetSecretAction.outputs.username }}" keyvault.properties
+        sed -e "s/##KV_PASSWORD##/${{ steps.myGetSecretAction.outputs.userpassword }}" keyvault.properties
         cat keyvault.properties
          
     - name: Build the Docker image
