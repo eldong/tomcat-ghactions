@@ -17,20 +17,30 @@ jobs:
     - uses: Azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - uses: Azure/get-keyvault-secrets@v1
+
+    - name: Retreive creds from keyvault
+      uses: Azure/get-keyvault-secrets@v1
       with: 
         keyvault: "tomcat"
         secrets: 'username, userpassword'
       id: myGetSecretAction    
-    
-    - uses: azure/docker-login@v1
+
+    - name: Login to ACR
+      uses: azure/docker-login@v1
       with:
         login-server: tomcatghactions.azurecr.io
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}    
-
+        
+    - name: Replace creds in properties file
+      uses: ./.github/actions/replace
+      with:
+        files: app-deployment.yaml
+        replacements: '$$KV_USER_NAME$$=${{ steps.myGetSecretAction.outputs.username }},$$KV_PASSWORD$$=${{ steps.myGetSecretAction.outputs.userpassword }}'
+         
     - name: Build the Docker image
       run: |
+        cat application.properties
         docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:latest
         docker push tomcatghactions.azurecr.io/tomcat:latest
 #        docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
