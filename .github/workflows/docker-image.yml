@@ -38,13 +38,12 @@ jobs:
 #        files: keyvault.properties
 #        replacements: '$$KV_USER_NAME$$=${{ steps.myGetSecretAction.outputs.username }},$$KV_PASSWORD$$=${{ steps.myGetSecretAction.outputs.userpassword }}'
       run: |
-        sed -e 's/##KV_USER_NAME##/${{ steps.myGetSecretAction.outputs.username }}/g' application.properties
-        sed -e 's/##KV_PASSWORD##/${{ steps.myGetSecretAction.outputs.userpassword }}/g' application.properties
-        cat application.properties
+        sed -e 's/##KV_USER_NAME##/${{ steps.myGetSecretAction.outputs.username }}/g' keyvault.properties
+        sed -e 's/##KV_PASSWORD##/${{ steps.myGetSecretAction.outputs.userpassword }}/g' keyvault.properties
+        cat keyvault.properties
          
     - name: Build the Docker image
       run: |
-        cat application.properties
         docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:latest
         docker push tomcatghactions.azurecr.io/tomcat:latest
 #        docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
