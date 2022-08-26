@@ -14,6 +14,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: Azure/get-keyvault-secrets@v1
+      with: 
+        keyvault: "tomcat"
+        secrets: 'username, userpassword'
+      id: myGetSecretAction    
+    
     - uses: azure/docker-login@v1
       with:
         login-server: tomcatghactions.azurecr.io
