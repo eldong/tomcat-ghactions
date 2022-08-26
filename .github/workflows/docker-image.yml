@@ -35,7 +35,7 @@ jobs:
     - name: Replace creds in properties file
       uses: ./.github/actions/replace
       with:
-        files: app-deployment.yaml
+        files: application.properties
         replacements: '$$KV_USER_NAME$$=${{ steps.myGetSecretAction.outputs.username }},$$KV_PASSWORD$$=${{ steps.myGetSecretAction.outputs.userpassword }}'
          
     - name: Build the Docker image
