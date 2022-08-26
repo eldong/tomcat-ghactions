@@ -38,9 +38,8 @@ jobs:
 #        files: application.properties
 #        replacements: '$$KV_USER_NAME$$=${{ steps.myGetSecretAction.outputs.username }},$$KV_PASSWORD$$=${{ steps.myGetSecretAction.outputs.userpassword }}'
       run: |
-        cat application.properties
-        sed -e 's/$$KV_USER_NAME$$/${{ steps.myGetSecretAction.outputs.username }}/g' application.properties
-        sed -e 's/$$KV_PASSWORD$$/${{ steps.myGetSecretAction.outputs.userpassword }}/g' application.properties
+        sed -e 's/##KV_USER_NAME##/${{ steps.myGetSecretAction.outputs.username }}/g' application.properties
+        sed -e 's/##KV_PASSWORD##/${{ steps.myGetSecretAction.outputs.userpassword }}/g' application.properties
         cat application.properties
          
     - name: Build the Docker image
