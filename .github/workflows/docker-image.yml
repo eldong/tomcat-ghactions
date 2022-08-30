@@ -45,6 +45,15 @@ jobs:
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:latest
+
+    - name: Scan image
+      uses: Azure/container-scan@v0
+      with:
+        image-name: tomcatghactions.azurecr.io/tomcat:latest
+        severity-threshold: CRITICAL
+        run-quality-checks: true
+
+    - name: Build the image to ACR
+      run: |
+        docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:latest
         docker push tomcatghactions.azurecr.io/tomcat:latest
-#        docker build . --file Dockerfile --tag tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
-#        docker push tomcatghactions.azurecr.io/tomcat:${{ github.run_number }}
